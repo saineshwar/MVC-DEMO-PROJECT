@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<div class="container">
+
+    <div class="logo col-sm-12 text-center col-md-12 ">
+        <img alt="" src="~/Images/dotnetsai.png" />
+    </div>
+    <div class="clearfix"></div>
+    <fieldset>
+
+        <legend>Admin Dashboard</legend>
+
+        <div class="panel">
+
+            <div class="panel-body">
+              
+                <div class="col-md-3 dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-user"></span>
+                    @Html.ActionLink("Create User Account", "Register", "Account")
+                </div>
+                  <div class="col-md-3 dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    @Html.ActionLink("Create Scheme", "Create", "Scheme")
+                </div>
+                <div class="col-md-3 dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    @Html.ActionLink("Create Plan", "Create", "Plan")
+                </div>
+
+
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    @Html.ActionLink("CreateRole", "RoleCreate", "Account")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    @Html.ActionLink("DeleteRole", "DeleteRoleForUser", "Account")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-pawn"></span>
+                    @Html.ActionLink("List of all roles Assigned", "DisplayAllUserroles", "Account")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-list"></span>
+                    @Html.ActionLink("List of all User", "AllRegisterUserDetails", "Account")
+                </div>
+              
+
+
+                <div class="col-md-3 dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-indent-left"></span>
+                    @Html.ActionLink("List of all roles", "RoleIndex", "Account")
+                </div>
+
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-random"></span>
+                    @Html.ActionLink("Assign Role To User", "RoleAddToUser", "Account")
+                </div>
+
+
+
+                 <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    @Html.ActionLink("Yearwise Report ", "YearwiseReport", "YearwiseCollection")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    @Html.ActionLink("Monthwise Report ", "MonthwiseReport", "MonthwiseCollection")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    @Html.ActionLink("Details Member Report", "DetailsMemberReport", "DetailsReport")
+                </div>
+                <div class="col-md-3  dashboard-icon col-sm-3">
+                    <span class="glyphicon glyphicon-list"></span>
+                    @Html.ActionLink("All Member List ", "AllMemberList", "Payment")
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+</div>

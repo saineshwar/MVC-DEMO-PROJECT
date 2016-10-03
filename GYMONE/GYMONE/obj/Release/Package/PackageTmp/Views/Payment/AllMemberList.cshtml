@@ -1,0 +1,61 @@
+﻿@model GYMONE.Models.PaymentlistingDTO
+@{
+    ViewBag.Title = "AllMemberList";
+}
+@using GridMvc.Html
+
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">All Member List</legend>
+        <div style="margin-top: 5px"></div>
+
+        <div class="test" style="overflow: scroll; height:500px; width: 1000px">
+            <div style="width: 1000px">
+            @Html.Grid(Model.PaymentList).Columns(columns =>
+                    {
+                        columns.Add(c => c.MemberReg).Titled("MemberNo").Filterable(true);
+                        columns.Add(c => c.Name).Titled("Name").Filterable(true);
+                        columns.Add(c => c.JoiningDate).Titled("JoiningDate").Filterable(true).Format("{0:dd/MM/yyyy}");
+                        columns.Add(c => c.RenwalDate).Titled("RenwalDate").Filterable(true).Format("{0:dd/MM/yyyy}");
+                        columns.Add(c => c.Contactno).Titled("Contactno").Filterable(true);
+                        columns.Add(c => c.PlanName).Titled("PlanName").Filterable(true);
+                        columns.Add(c => c.SchemeName).Titled("SchemeName").Filterable(true);
+                        columns.Add(c => c.PaymentAmount).Titled("PaymentAmount").Filterable(true);
+                        columns.Add(c => c.EmailID).Titled("EmailID").Filterable(true);
+                        columns.Add(c => c.Address).Titled("Address").Filterable(true);
+
+                    }).WithPaging(10).Sortable(true)
+                </div>
+        </div>
+
+    </fieldset>
+
+</div>

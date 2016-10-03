@@ -1,0 +1,165 @@
+﻿@model GYMONE.Models.Register
+@{
+    ViewBag.Title = "Register";
+}
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+
+
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+
+
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+
+
+    @using (Html.BeginForm())
+    {
+    
+        <fieldset>
+            <legend class="legend">Register</legend>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    Full Name 
+                </div>
+
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FullName)
+
+                </div>
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    User Name
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.username)
+                </div>
+
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    EmailID
+                </div>
+
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EmailID)
+
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    Password
+                </div>
+
+                <div class="col-md-3">
+                    @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.password)
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    Confirm Password
+                </div>
+
+
+                <div class="col-md-3">
+
+                    @Html.PasswordFor(m => m.Confirmpassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Confirmpassword)
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+
+            </div>
+
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input id="Submit" class="btn btn-success" type="submit" value="Save" />
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+
+            <div>
+                @Html.ActionLink("List of all User","AllRegisterUserDetails","Account")
+
+            </div>
+            <div style="margin-top: 5px"></div>
+
+        </fieldset>
+    }
+</div>
+
+
+
+

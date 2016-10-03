@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+      <link href="~/Images/dotnetsaifavicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <header>
+      
+            <div class="col-md-12 col-sm-12">
+                <section id="login">
+                </section>
+            </div>
+        
+    </header>
+    <div id="body">
+             <div class="container">
+        @RenderSection("featured", required: false)
+        <section class="">
+            @RenderBody()
+        </section>
+                 </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="text-center footer">
+              Developed By <a href="mailto:saihacksoft@gmail.com">Saineshwar Bageri</a>
+              Designed By <a href="mailto:suryakantubhe@gmail.com">Suryakant Prakash ubhe</a>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

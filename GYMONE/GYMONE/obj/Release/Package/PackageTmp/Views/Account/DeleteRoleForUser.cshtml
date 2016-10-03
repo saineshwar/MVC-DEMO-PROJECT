@@ -1,0 +1,92 @@
+﻿@model GYMONE.Models.AssignRoleVM
+@{
+    ViewBag.Title = "DeleteRoleForUser";
+}
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+
+<div>
+    @using (Html.BeginForm("DeleteRoleForUser", "Account"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+       
+        if (ViewBag.ResultMessage != null)
+        {
+        <div class="alert alert-success" style="float: none;" role="alert">@ViewBag.ResultMessage</div>
+        }
+        
+        <fieldset>
+            <legend class="legend">Delete A User from a Role</legend>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.Label("User Name")
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.UserName, new SelectList(Model.Userlist, "Value", "Text"),
+                 new { style = "width:200px", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+
+                </div>
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+            </div>
+
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.Label("Role Name")
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.RoleName, new SelectList(Model.RolesList, "Value", "Text"), new { style = "width:200px", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RoleName)
+
+                </div>
+                <div class="col-md-3">
+                </div>
+
+                <div class="col-md-3">
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input id="Submit" class="btn btn-success" type="submit" value="Delete" />
+                </div>
+            </div>
+
+        </fieldset>
+           
+       
+    }
+</div>

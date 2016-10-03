@@ -1,0 +1,94 @@
+﻿@model GYMONE.Models.SchemeMasterDTO
+
+@{
+    ViewBag.Title = "Edit Scheme";
+}
+
+@if (TempData["MessageUpdate"] != null)
+{
+    <div class="alert alert-success" style="float: none;" role="alert">
+
+        <b>@TempData["MessageUpdate"]</b>
+
+
+    </div>
+}
+
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="container">
+      <div class="logo col-sm-12 text-center col-md-12 ">
+        <img alt="" src="~/Images/dotnetsai.png" />
+    </div>
+
+    <div class="clearfix"></div>
+
+    <fieldset>
+        <legend class="legend">Edit Scheme</legend>
+
+
+        <div class="panel">
+
+            <div class="panel-body">
+
+                <div>
+                    @Html.ActionLink("Scheme List", "Details", "Scheme", new { @class = "btn btn-info btn-pressure" })
+                </div>
+
+
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
+                     @Html.AntiForgeryToken()
+
+                    <fieldset>
+                        <legend>SchemeMasterDTO</legend>
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.SchemeName)
+                                @Html.HiddenFor(model => model.SchemeID)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(model => model.SchemeName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SchemeName)
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-success" value="Update" />
+                                 @Html.ActionLink("Cancel", "Details", "Scheme", new  {  @class="btn btn-success"})
+                            </div>
+                        </div>
+
+                    </fieldset>
+                }
+                <div style="margin-top: 5px"></div>
+
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

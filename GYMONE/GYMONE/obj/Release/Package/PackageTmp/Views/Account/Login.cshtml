@@ -1,0 +1,101 @@
+﻿@model GYMONE.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .clear
+    {
+        clear: both;
+    }
+
+    .loginPage ul
+    {
+        margin: 0;
+        padding: 10px 0 0;
+    }
+
+    .panel ul
+    {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .loginPage ul li
+    {
+        list-style-type: none;
+        padding: 5px 0;
+    }
+
+    ul, li
+    {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
+<div id="mainContent">
+    <section class="container">
+
+        <div class="innerContainer">
+
+            <div class="row">
+                <div id="myWizard" class="formArea LRmargin">
+                    @using (Html.BeginForm())
+                    {
+                        <div id="divMessage" class=" text-center alert alert-success">
+                            @Html.ValidationSummary()
+                        </div>
+                        <div class="col-md-4 col-md-offset-4 col-xs-12">
+                            <div class="loginPage panel panel-info">
+                                <div class="panel-heading">
+                                    <h1 class="mainHeader panel-title"><span>Admin Login</span></h1>
+                                </div>
+                                <div class="panel-body">
+                                    <ul>
+                                        <li>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                @Html.TextBoxFor(m => m.username)
+                                                @Html.ValidationMessageFor(m => m.username)
+
+
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                @Html.PasswordFor(m => m.password)
+                                                @Html.ValidationMessageFor(m => m.password)
+                                            </div>
+                                        </li>
+                                        <li class="text-center">
+                                            <input id="BtnLogin" type="submit" class="btn btn-success" name="BtnLogin" value="Login" />
+                                            <input id="BtnReset" type="reset" class="btn btn-success" name="BtnReset" value="Reset" />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+

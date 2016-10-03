@@ -1,0 +1,221 @@
+﻿@model GYMONE.Models.RecepitDTO
+@{
+    ViewBag.Title = "GenerateReceipt";
+}
+
+
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#MembernoSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Receipt/GetDatabyMemberNo",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.MemberNo, value: item.MainMemberID };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtMemberName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Receipt/GetDatabyMemberName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    function Checkpanel() {
+
+        if ($("#Memberno").is(':checked')) {
+
+            $("#MDID1").css("display", "block");
+            $("#MDID2").css("display", "none");
+        }
+
+        if ($("#MemberName").is(':checked')) {
+
+            $("#MDID2").css("display", "block");
+            $("#MDID1").css("display", "none");
+        }
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">Generate Receipt</legend>
+        <div class="panel">
+
+            <div class="panel-body">
+
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success" style="float: none;" role="alert">
+                        <b>@TempData["Message"]</b>
+                    </div>
+                }
+
+
+                @using (Html.BeginForm("Generatereceipt", "Receipt", FormMethod.Post))
+                {
+            
+                    @Html.ValidationSummary()
+                     @Html.AntiForgeryToken()
+            
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            @Html.RadioButtonFor(m => m.PaymentSearch, 1, new { id = "Memberno", onclick = "Checkpanel();" }) Member No
+                @Html.RadioButtonFor(m => m.PaymentSearch, 2, new { id = "MemberName", onclick = "Checkpanel();" }) Member Name
+                 
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px"></div>
+                    <div style="display: none;" id="MDID1">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Memberno")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.MembernoSearch, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div style="display: none;" id="MDID2">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("MemberName")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.MemberName, new { id = "txtMemberName", @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <input id="DownloadReceipt" class="btn btn-success" onclick="return validatepage();" type="submit" name="actionType" value="Download Receipt" />
+
+                            <input id="Downloadform" class="btn btn-success" onclick="return validatepage();"
+                                type="submit" name="actionType" value="Download Candidate Form" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                }
+            </div>
+        </div>
+    </fieldset>
+
+</div>
+<script type="text/javascript">
+    function rebindpanel() {
+
+
+        if ('@Model.PaymentSearch' == '1') {
+
+            document.getElementById("MDID1").style.display = "block";
+            document.getElementById("MDID2").style.display = "none";
+
+
+        }
+
+        else if ('@Model.PaymentSearch' == '2') {
+
+            document.getElementById("MDID2").style.display = "block";
+            document.getElementById("MDID1").style.display = "none";
+
+        }
+        else {
+
+            document.getElementById("MDID1").style.display = "none";
+            document.getElementById("MDID2").style.display = "none";
+
+        }
+
+    }
+
+    window.onload = rebindpanel();
+</script>
+
+<script>
+
+    function validatepage() {
+
+
+        if ($("#Memberno").is(':checked') == false && $("#MemberName").is(':checked') == false) {
+            alert("Please select Member No or MemberName !");
+            return false;
+        }
+
+        else if ($("#Memberno").is(':checked') == true && $("#MembernoSearch").val() == "") {
+            alert("Please enter Member No !");
+            return false;
+        }
+        else if ($("#MemberName").is(':checked') == true && $("#txtMemberName").val() == "") {
+            alert("Please enter Member Name !");
+            return false;
+        }
+        else {
+
+            return true;
+        }
+
+    }
+
+</script>

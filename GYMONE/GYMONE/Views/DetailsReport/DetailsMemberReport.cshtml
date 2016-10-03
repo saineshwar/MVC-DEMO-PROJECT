@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "DetailsMemberReport";
+}
+
+
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">All Member Report Download</legend>
+
+        <div class="panel">
+
+            <div class="panel-body">
+
+                @using (Html.BeginForm("DetailsMemberReport", "DetailsReport", FormMethod.Post))
+                {
+                     @Html.AntiForgeryToken()
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            All Member Report According to Renwal Date :- 
+                        </div>
+                        <div class="col-md-6">
+                            <input id="submitval" class="btn btn-success" type="submit" name="actionType" value="Download" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                }
+            </div>
+
+        </div>
+    </fieldset>
+</div>

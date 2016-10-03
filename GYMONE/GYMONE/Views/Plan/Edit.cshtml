@@ -1,0 +1,120 @@
+﻿@model GYMONE.Models.PlanMasterDTO
+
+@{
+    ViewBag.Title = "Edit Plan";
+}
+
+@if (TempData["notice"] != null)
+{<div class="alert alert-success" style="float: none;" role="alert">
+    <b>@TempData["notice"]</b>
+    </div>
+
+}
+
+
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+
+
+<div class="container">
+
+    <div class="logo col-sm-12 text-center col-md-12 ">
+        <img alt="" src="~/Images/dotnetsai.png" />
+    </div>
+
+    <div class="clearfix"></div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+         @Html.AntiForgeryToken()
+        <fieldset>
+            <legend class="legend">Edit Plan</legend>
+
+            <div class="panel">
+
+                <div class="panel-body">
+
+                     <div>
+                    @Html.ActionLink("Plan List", "Index", "Plan", new { @class = "btn btn-info btn-pressure" })
+                </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.HiddenFor(model => model.PlanID)
+                            @Html.LabelFor(model => model.PlanName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.PlanName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlanName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.SchemeID)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.SchemeID, new SelectList(Model.ListScheme, "SchemeID", "SchemeName"), new { @class = "form-control" })
+                            @Html.ValidationMessage("SchemeMessage")
+                        </div>
+                    </div>
+
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.PlanAmount)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.PlanAmount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlanAmount)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ServiceTax)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.ServiceTax, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ServiceTax)
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.PeriodID)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.PeriodID, new SelectList(Model.ListofPeriod, "Value", "Text"), new { @class = "form-control" })
+                            @Html.ValidationMessage("PeriodMessage")
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success" name="actionType" value="Update" />
+                              @Html.ActionLink("Cancel", "Index", "Plan", new  {  @class="btn btn-success"})
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+    }
+
+   
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

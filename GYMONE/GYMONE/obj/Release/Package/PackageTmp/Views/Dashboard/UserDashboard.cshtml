@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "UserDashboard";
+}
+
+
+
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<div class="alert alert-info" style="float: none;" role="alert">
+    UserDashboard
+</div>
+
+
+<div class="container">
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Master</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @Html.ActionLink("SchemeMaster", "Create", "Scheme")
+                </li>
+                <li class="list-group-item">
+                    @Html.ActionLink("PlanMaster", "Create", "Plan")
+                </li>
+                <li class="list-group-item">
+                    @Html.ActionLink("RegisterMember Master", "Create", "RegisterMember")
+                </li>
+                <li class="list-group-item">
+                    @Html.ActionLink("Paymentlisting Master", "PaymentDetails", "Payment")
+                </li>
+                <li class="list-group-item">
+                    @Html.ActionLink("Payment Renewal", "RenewalDetails", "Renewal")
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Reports</div>
+        <div class="panel-body">
+
+            <ul class="list-group">
+
+                <li class="list-group-item">
+                    @Html.ActionLink("All Member List ", "AllMemberList", "Payment")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Recepit / Download Candidate Form", "GenerateRecepit", "Recepit")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Yearwise Report Download", "YearwiseReport", "YearwiseCollection")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Monthwise Report Download", "MonthwiseReport", "MonthwiseCollection")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Details Member Report", "DetailsMemberReport", "DetailsReport")
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+</div>

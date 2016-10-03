@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "DetailsMemberReport";
+}
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">All Member Report Download</legend>
+
+        @using (Html.BeginForm("DetailsMemberReport", "DetailsReport", FormMethod.Post))
+        {
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    All Member Report According to Renwal Date :- 
+                </div>
+                <div class="col-md-6">
+                    <input id="submitval" class="btn btn-success" type="submit" name="actionType" value="Download" />
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+        }
+
+    </fieldset>
+</div>

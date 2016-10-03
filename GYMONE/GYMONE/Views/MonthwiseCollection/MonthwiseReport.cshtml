@@ -1,0 +1,74 @@
+﻿@model GYMONE.Models.MonthwiseModel
+
+@{
+    ViewBag.Title = "MonthwiseReport";
+}
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">Monthwise Report</legend>
+
+        <div class="panel">
+
+            <div class="panel-body">
+
+                @using (Html.BeginForm("MonthwiseReport", "MonthwiseCollection", FormMethod.Post))
+                {
+                    @Html.ValidationSummary()
+                     @Html.AntiForgeryToken()
+            
+            
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayName("Select Month Name")
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.MonthID, new SelectList(Model.MonthNameList, "Value", "Text"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MonthID)
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input id="DownloadMonthwise" class="btn btn-success" onclick="return validatepage();" type="submit" name="actionType" value="Download Monthwise" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                }
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script>
+
+    function validatepage() {
+
+        if ($("#MonthID").val() == 0) {
+            alert("Please select Month to download report!");
+            return false;
+        }
+
+        else {
+            return true;
+
+        }
+    }
+
+</script>

@@ -1,0 +1,61 @@
+﻿<div class="panel">
+
+    <div class="panel-body">
+
+        @if (Request.IsAuthenticated)
+        {
+            <div class="btn btn-warning btn-pressure" style="color:black;">
+                Hello,@User.Identity.Name
+            </div>
+            
+            if (string.Equals(Convert.ToString(Session["LoginType"]), "Admin"))
+            {
+   
+            <div class="btn btn-warning btn-pressure">
+                @Html.ActionLink("Dashboard", "AdminDashboard", "Dashboard")
+            </div>
+    
+            }
+            else
+            {
+            <div class="btn btn-warning btn-pressure">
+                @Html.ActionLink("Dashboard", "UserDashboard", "Dashboard")
+            </div>
+            }
+            
+            
+            
+            <text>
+
+
+
+          
+
+            <div class="btn btn-warning btn-pressure">
+                @Html.ActionLink("Changepassword", "Changepassword", "Account")
+            </div>
+
+          @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+           
+               <a class="btn btn-danger btn-pressure" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            
+            }
+
+            </text>
+    
+
+
+        }
+        else
+        {
+    
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-info btn-pressure" })
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-success btn-pressure" })
+ 
+        }
+
+
+    </div>
+</div>

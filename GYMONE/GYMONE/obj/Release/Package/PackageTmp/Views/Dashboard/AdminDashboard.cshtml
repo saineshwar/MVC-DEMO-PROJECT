@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+
+
+<style>
+    fieldset.scheduler-border
+    {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+    }
+
+
+
+    legend.scheduler-border
+    {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+</style>
+
+<div class="alert alert-info" style="float: none;" role="alert">
+    Dashboard
+</div>
+
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Roles Management</div>
+        <div class="panel-body">
+            <ul class="list-group">
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Create User Account", "Register", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("List of all roles", "RoleIndex", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("Assign Role To User", "RoleAddToUser", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("CreateRole", "RoleCreate", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("DeleteRole", "DeleteRoleForUser", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("List of all roles Assign to User", "DisplayAllUserroles", "Account")
+                </li>
+
+                <li class="list-group-item">
+                    @Html.ActionLink("List of all User", "AllRegisterUserDetails", "Account")
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</div>

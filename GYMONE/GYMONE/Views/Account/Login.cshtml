@@ -1,0 +1,75 @@
+﻿@model GYMONE.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+<div id="mainContent">
+    <section class="container">
+
+        <div class="innerContainer">
+
+            <div class="row">
+                <div id="myWizard" class="formArea LRmargin">
+                    @using (Html.BeginForm())
+                    {
+                         @Html.AntiForgeryToken()
+                        
+                        <div id="divMessage" class=" text-center col-md-4 col-sm-4 col-md-offset-4 alert alert-success">
+                            @Html.ValidationSummary()
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                         <div class="logo col-sm-12 text-center col-md-12 "> <img alt=""  src="~/Images/dotnetsai.png" /></div>
+                        <div class="col-md-4 col-md-offset-4 col-xs-12">
+                            <div class="loginPage panel panel-info">
+                           <div class="form-group">
+                                 <span class=""><i class="glyphicon glyphicon-user"></i> User</span>
+                                                @Html.TextBoxFor(m => m.username, new {  @class = "form-control" , autocomplete="off" })
+                                                @Html.ValidationMessageFor(m => m.username)
+
+                           </div>
+                                <div class="form-group">
+                                      <span class=""><i class="glyphicon glyphicon-lock"></i> Password</span>
+                                                @Html.PasswordFor(m => m.password, new {  @class = "form-control" , autocomplete="off" })
+                                                @Html.ValidationMessageFor(m => m.password)
+
+                                </div>
+                                <div class="form-group">
+                                     <input id="BtnLogin" type="submit" class="btn btn-success btn-pressure" name="BtnLogin" value="Login" />
+                                            <input id="BtnReset" type="reset" class="btn btn-info btn-pressure" name="BtnReset" value="Reset" />
+
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                    }
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+

@@ -1,0 +1,329 @@
+﻿@model GYMONE.Models.PaymentlistingDTOVM
+
+@using PagedList.Mvc
+
+
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+
+
+
+<style type="text/css">
+
+    .name{
+    width: 50px;
+}
+
+    .webgrid-table
+    {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #ddd;
+        background-color: white;
+    }
+
+        .webgrid-table td, th
+        {
+            border: 1px solid #ddd;
+            padding: 3px 7px 2px;
+        }
+
+    .webgrid-header
+    {
+        background-color: #4888C2;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+
+    .webgrid-footer
+    {
+    }
+
+    .webgrid-row-style
+    {
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-alternating-row
+    {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtMemberno").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Payment/GetDatabyMemberNo",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.MemberNo, value: item.MainMemberID };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtMemberName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Payment/GetDatabyMemberName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    function Checkpanel() {
+        
+        if ($("#Memberno").is(':checked')) {
+
+            $("#MDID1").css("display", "block");
+            $("#MDID2").css("display", "none");
+        }
+
+        if ($("#MemberName").is(':checked')) {
+
+            $("#MDID2").css("display", "block");
+            $("#MDID1").css("display", "none");
+        }
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+<script type="text/javascript">
+
+    function Valdateform() {
+        
+        if ($("#Memberno").prop("checked") == false && $("#MemberName").prop("checked") == false) {
+            alert('Please select type to search ( Member No / Member Name).');
+            return false;
+        }
+        else if ($("#Memberno").prop("checked") == true && $("#txtMemberno").val() == "") {
+            alert('Please Enter Member No.');
+            return false;
+        }
+        else if ($("#MemberName").prop("checked") == true && $("#txtMemberName").val() == "") {
+            alert('Please Enter Member Name.');
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+</script>
+
+
+
+@using (Html.BeginForm("PaymentDetails", "Payment", FormMethod.Get))
+{
+    
+        
+    <div class="container">
+        <div style="margin-top: 10px"></div>
+        <fieldset>
+
+            <legend class="legend">Payment Details</legend>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    @Html.RadioButtonFor(m => m.PaymentSearch, 1, new { id = "Memberno", onclick = "Checkpanel();" }) Member No
+                    @Html.RadioButtonFor(m => m.PaymentSearch, 2, new { id = "MemberName", onclick = "Checkpanel();" }) Member Name
+                 
+                </div>
+            </div>
+            <div style="margin-top: 30px"></div>
+            <div style="display: none;" id="MDID1">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Memberno")
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.Memberno, new { id = "txtMemberno", @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div style="display: none;" id="MDID2">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("MemberName")
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.MemberName, new { id = "txtMemberName", @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" onclick="return Valdateform();" class="btn btn-success" name="SearchButton" value="Search" />
+                </div>
+            </div>
+            <div style="margin-top: 5px"></div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div id="gridContent" style="padding: 20px;">
+                        @if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+                        {
+
+
+
+                            var grid = new WebGrid(Model.SearchResults, defaultSort: "DeveloperCount");
+                            @grid.GetHtml(
+           tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style",
+        mode: WebGridPagerModes.All,
+            columns: grid.Columns(
+            grid.Column("MemberReg", "MemberReg"),
+            grid.Column("Name",  header: "NAME", style: "300px"),
+            grid.Column("Contactno", "Contactno"),
+            grid.Column("PlanName", "PlanName"),
+            grid.Column("SchemeName", "SchemeName"),
+            grid.Column("RenwalDate", "RenwalDate"),
+            grid.Column("PaymentAmount", "PaymentAmount"),
+
+           
+grid.Column(
+    "JoiningDate",
+    "JoiningDate",
+    format: (item) => string.Format("{0:dd-MMM-yyyy}", item.JoiningDate)
+),
+grid.Column(
+    "RenwalDate",
+    "RenwalDate",
+    format: (item) => string.Format("{0:dd-MMM-yyyy}", item.RenwalDate)
+)
+
+
+            ))
+  
+                            if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+                            {
+                            @Html.PagedListPager(Model.SearchResults, page => Url.Action("PaymentDetails", new RouteValueDictionary() 
+              {
+              { "Page", page },
+              { "PaymentSearch", Model.PaymentSearch },
+              { "Memberno", Model.Memberno },
+              { "MemberName", Model.MemberName }
+              }), PagedListRenderOptions.PageNumbersOnly)
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
+
+    </div>
+    
+
+}
+
+
+<script type="text/javascript">
+    function rebindpanel() {
+        
+
+        if ('@Model.PaymentSearch' == '1') {
+
+            document.getElementById("MDID1").style.display = "block";
+            document.getElementById("MDID2").style.display = "none";
+        }
+
+        else if ('@Model.PaymentSearch' == '2') {
+
+            document.getElementById("MDID2").style.display = "block";
+            document.getElementById("MDID1").style.display = "none";
+        }
+        else {
+
+            document.getElementById("MDID1").style.display = "none";
+            document.getElementById("MDID2").style.display = "none";
+
+        }
+
+    }
+
+    window.onload = rebindpanel();
+</script>
+
+
+

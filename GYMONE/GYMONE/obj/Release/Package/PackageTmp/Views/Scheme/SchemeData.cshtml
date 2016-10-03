@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GYMONE.Models.SchemeMasterDTO>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    Layout = null;
+}
+
+
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<div class="container">
+    <h3>Details</h3>
+
+    <div>
+    @Html.ActionLink("Create Scheme", "Create")
+</div>
+
+    @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.SchemeID).Titled("Scheme ID");
+                        columns.Add(c => c.SchemeName).Titled("SchemeName").Filterable(true);
+
+                        columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.SchemeID }));
+
+                    }).WithPaging(2).Sortable(true)
+
+
+</div>

@@ -1,0 +1,74 @@
+﻿@model GYMONE.Models.YearwiseModel
+
+@{
+    ViewBag.Title = "Yearwise Report";
+}
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">Yearwise Report</legend>
+
+
+        <div class="panel">
+
+            <div class="panel-body">
+
+                @using (Html.BeginForm("YearwiseReport", "YearwiseCollection", FormMethod.Post))
+                {
+                    @Html.ValidationSummary()
+             @Html.AntiForgeryToken()
+
+            
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayName("Select Year")
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.YearID, new SelectList(Model.YearNameList, "Value", "Text"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.YearID)
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input id="DownloadYearwise" class="btn btn-success" onclick="return validatepage();" type="submit" name="actionType" value="Download" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                }
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script>
+
+    function validatepage() {
+
+        if ($("#YearID").val() == 0) {
+            alert("Please select Year to download report!");
+            return false;
+        }
+
+        else {
+            return true;
+
+        }
+    }
+
+</script>

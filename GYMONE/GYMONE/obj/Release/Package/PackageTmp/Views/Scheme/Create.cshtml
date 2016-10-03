@@ -1,0 +1,102 @@
+﻿@model GYMONE.Models.SchemeMasterDTO
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<script>
+    if (!Modernizr.inputtypes.date) {
+        $(function () {
+            $(".datefield").datepicker();
+        });
+    }
+</script>
+
+
+
+    @if (TempData["Message"] != null)
+    {
+      <div class="alert alert-success" style="float: none;" role="alert">
+   
+     <b>@TempData["Message"]</b>
+
+
+     </div>
+    }
+
+
+
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+
+<style>
+    .legend
+    {
+        background: #d6e9c6 none repeat scroll 0 0;
+        border-bottom: 0 none;
+        border-radius: 4px;
+        color: black;
+        display: block;
+        font-size: 1em;
+        padding: 5px 8px;
+        width: auto;
+    }
+
+    .selectStyle
+    {
+        width: 213px;
+    }
+</style>
+<script type="text/javascript">
+    $.noConflict();
+</script>
+<div class="container">
+    <div style="margin-top: 10px"></div>
+
+    <fieldset>
+        <legend class="legend">Create Scheme</legend>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>SchemeMasterDTO</legend>
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.SchemeName)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.SchemeName , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SchemeName)
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success" value="Create" />
+                    </div>
+                </div>
+
+            </fieldset>
+        }
+           <div style="margin-top: 5px"></div>
+        <div>
+            @Html.ActionLink("Scheme List", "Details")
+        </div>
+
+    </fieldset>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

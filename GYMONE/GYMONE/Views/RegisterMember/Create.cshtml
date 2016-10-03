@@ -1,0 +1,418 @@
+﻿@model GYMONE.Models.MemberRegistrationDTO
+@{
+    ViewBag.Title = "Create Member Registration";
+}
+
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+
+
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" style="float: none;" role="alert">
+
+        <b>@TempData["Message"]</b>
+
+    </div>
+}
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#WorkouttypeID").change(function () {
+            $("#PlantypeID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPlan")',
+                dataType: 'json',
+                data: { WorkTypeID: $("#WorkouttypeID").val() },
+                success: function (plandata) {
+
+                    $("#PlantypeID").append('<option value="' + "0" + '">' + "Select" + '</option>');
+
+                    $.each(plandata, function (i, plan) {
+                        $("#PlantypeID").append('<option value="' + plan.PlanID + '">' + plan.PlanName + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    function rebindPlan() {
+
+
+        if ('@ViewData["SelectedPlan"]' != '') {
+
+            $("#WorkouttypeID").val('@Model.WorkouttypeID');
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPlan")',
+                dataType: 'json',
+                data: {
+                    WorkTypeID: $("#WorkouttypeID").val()
+                },
+                success: function (plandata) {
+
+                    $("#PlantypeID").append('<option value="' + "0" + '">' + "Select" + '</option>');
+
+                    $.each(plandata, function (i, plan) {
+                        $("#PlantypeID").append('<option value="' + plan.PlanID + '">' + plan.PlanName + '</option>');
+                    });
+
+                    if ('@ViewData["SelectedPlan"]' != 0) {
+                        $("#PlantypeID").val('@ViewData["SelectedPlan"]');
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve plan.' + ex);
+                }
+            });
+
+
+
+        }
+
+
+    }
+
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#PlantypeID").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAmount")',
+                dataType: 'json',
+                data: { PlanID: $("#PlantypeID").val(), WorkTypeID: $("#WorkouttypeID").val() },
+                success: function (amount) {
+                    $("#Amount").val(amount);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+
+</script>
+
+
+<script lang="ja" type="text/javascript">
+    function ConfirmDelete() {
+        var x = confirm("Are you sure you want to Save?");
+        if (x) {
+            return Validateform();
+        }
+        else {
+            return false;
+        }
+    }
+
+    function Validateform() {
+
+        if ($("#MemberFName").val() == "") {
+            alert("Please enter First Name");
+            return false;
+        }
+        else if ($("#MemberMName").val() == "") {
+            alert("Please enter Middle Name ");
+            return false;
+        }
+        else if ($("#MemberLName").val() == "") {
+            alert("Please enter Last Name ");
+            return false;
+        }
+        else if ($("#JoiningDate").val() == "") {
+            alert("Please select Joining Date");
+            return false;
+        }
+        else if ($("#DOB").val() == "") {
+            alert("Please select Date of Birth ");
+            return false;
+        }
+        else if ($("#Age").val() == "") {
+            alert("Please select Date of Birth ");
+            return false;
+        }
+        else if ($("#Gender").val() == 0) {
+            alert("Please Select Gender ");
+            return false;
+        }
+        else if ($("#EmailID").val() == "") {
+            alert("Please enter EmailID");
+            return false;
+        }
+        else if ($("#WorkouttypeID").val() == 0) {
+            alert("Please Select Workouttype Name ");
+            return false;
+        }
+        else if ($("#PlantypeID").val() == 0) {
+            alert("Please select PlanName");
+            return false;
+        }
+
+        else {
+            return true;
+        }
+
+    }
+</script>
+
+
+
+
+
+
+<div class="container">
+
+
+    <div class="logo col-sm-12 text-center col-md-12 ">
+        <img alt="" src="~/Images/dotnetsai.png" />
+    </div>
+
+    <div class="clearfix"></div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+     
+
+        <fieldset>
+            <legend class="legend">Create Member Registration</legend>
+
+            <div class="panel">
+
+                <div class="panel-body">
+
+                    <div>
+                        @Html.ActionLink("All Member Registration", "Index", "RegisterMember", new { @class = "btn btn-info btn-pressure" })
+                    </div>
+                  
+                    <br />
+                  
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.MemberFName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.MemberFName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MemberFName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.MemberMName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.MemberMName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MemberMName)
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.MemberLName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.MemberLName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MemberLName)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.JoiningDate)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.JoiningDate)
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.DOB)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.DOB)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.Age)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.Age, new { @class = "form-control", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.Age)
+                        </div>
+
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.Gender)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.Gender, new SelectList(Model.Listgender, "Value", "Text"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Gender)
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.EmailID)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EmailID)
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.WorkouttypeID)
+
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.WorkouttypeID, new SelectList(Model.ListScheme, "SchemeID", "SchemeName"),
+                   new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.WorkouttypeID)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.PlantypeID)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownList("PlantypeID", new SelectList(string.Empty, "PlanID", "PlanName"), "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlantypeID)
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.Contactno)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => Model.Contactno, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Contactno)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.Address)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextAreaFor(model => Model.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                    </div>
+
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.Amount)
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(model => Model.Amount, new { @class = "form-control", @readonly = true })
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input id="Submit" onclick="return ConfirmDelete();" class="btn btn-success" type="submit" value="Save" />
+                              @Html.ActionLink("Cancel", "Index", "RegisterMember", new  {  @class="btn btn-success"})
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+
+                </div>
+            </div>
+        </fieldset>
+        
+    }
+
+
+
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () { rebindPlan(); });
+</script>
+@section Scripts {
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+    @Styles.Render("~/Content/themes/base/css")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#JoiningDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+
+
+        var d = new Date();
+        $('#DOB').datepicker({
+
+
+            changeMonth: true,
+            changeYear: true,
+            changeday: true,
+            dateFormat: "yy-mm-dd",
+            yearRange: "1980:2015",
+            onSelect: function (selectedDate, ev) {
+                CalculateAge(selectedDate);
+            }
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        function CalculateAge(selectedDate) {
+
+            var x = selectedDate.split('-');
+            var curYear = new Date().getUTCFullYear();
+            var age = curYear - x[0];
+            $('#Age').val(age);
+        }
+
+    </script>
+}

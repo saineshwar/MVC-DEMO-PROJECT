@@ -1,0 +1,63 @@
+﻿@model IEnumerable<GYMONE.Models.SchemeMasterDTO>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    Layout = null;
+}
+
+
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+
+<div class="container">
+
+    <div class="logo col-sm-12 text-center col-md-12 ">
+        <img alt="" src="~/Images/dotnetsai.png" /></div>
+
+    <div class="clearfix"></div>
+
+    <fieldset>
+        <legend class="legend">Details</legend>
+
+
+        <div class="panel">
+
+            <div class="panel-body">
+                <div>
+                    @Html.ActionLink("Create Scheme", "Create", "Scheme", new { @class = "btn btn-info btn-pressure" })
+                </div>
+
+
+
+                <div>
+                    @Html.ActionLink("Create Scheme", "Create")
+                </div>
+
+                @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.SchemeID).Titled("Scheme ID");
+                        columns.Add(c => c.SchemeName).Titled("SchemeName").Filterable(true);
+
+                        columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.SchemeID }));
+
+                    }).WithPaging(2).Sortable(true)
+
+
+
+            </div>
+        </div>
+    </fieldset>
+
+</div>

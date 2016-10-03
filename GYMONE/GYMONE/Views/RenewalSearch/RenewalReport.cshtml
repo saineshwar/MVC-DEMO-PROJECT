@@ -1,0 +1,227 @@
+﻿@model GYMONE.Models.RenewalSearch
+@{
+    ViewBag.Title = "GenerateRecepit";
+}
+
+
+
+
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function Checkpanel() {
+
+        if ($("#ByExactDate").is(':checked')) {
+
+            $("#MDID1").css("display", "block");
+            $("#MDID2").css("display", "none");
+            document.getElementById("Exactdate").value = "";
+
+        }
+
+        if ($("#ByBetweenDate").is(':checked')) {
+
+            $("#MDID2").css("display", "block");
+            $("#MDID1").css("display", "none");
+
+            document.getElementById("Fromdate").value = "";
+            document.getElementById("Todate").value = "";
+        }
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+</script>
+
+<div class="container">
+    <div style="margin-top: 10px"></div>
+    <fieldset>
+
+        <legend class="legend">Renewal Report</legend>
+       
+        <div class="panel">
+
+            <div class="panel-body">
+
+
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success" style="float: none;" role="alert">
+                        <b>@TempData["Message"]</b>
+                    </div>
+                }
+
+
+                @using (Html.BeginForm("RenewalReport", "RenewalSearch", FormMethod.Post))
+                {
+            
+                    @Html.ValidationSummary()
+                     @Html.AntiForgeryToken()
+            
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            @Html.RadioButtonFor(m => m.RenewalSearchID, 1, new { id = "ByExactDate", onclick = "Checkpanel();" }) By Exact Date
+                @Html.RadioButtonFor(m => m.RenewalSearchID, 2, new { id = "ByBetweenDate", onclick = "Checkpanel();" }) By Between Date
+                 
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px"></div>
+                    <div style="display: none;" id="MDID1">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Exact date")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Exactdate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div style="display: none;" id="MDID2">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("From date")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Fromdate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            </div>
+                            <div class="col-md-3">
+                                @Html.Label("To date")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Todate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input id="DownloadRecepit" class="btn btn-success" onclick="return validatepage();" type="submit" name="actionType" value="Download" />
+                            @Html.ActionLink("Cancel", "RenewalReport", "RenewalSearch", new  {  @class="btn btn-success"})
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px"></div>
+                }
+
+            </div>
+
+        </div>
+
+    </fieldset>
+
+</div>
+<script type="text/javascript">
+    function rebindpanel() {
+        if ('@Model.RenewalSearchID' == '1') {
+
+            document.getElementById("MDID1").style.display = "block";
+            document.getElementById("MDID2").style.display = "none";
+
+
+
+        }
+        else if ('@Model.RenewalSearchID' == '2') {
+
+            document.getElementById("MDID2").style.display = "block";
+            document.getElementById("MDID1").style.display = "none";
+
+
+        }
+        else {
+            document.getElementById("MDID1").style.display = "none";
+            document.getElementById("MDID2").style.display = "none";
+            document.getElementById("Fromdate").value = "";
+            document.getElementById("Todate").value = "";
+        }
+    }
+    window.onload = rebindpanel();
+</script>
+
+<script>
+
+    function validatepage() {
+
+        if ($("#ByExactDate").is(':checked') == false && $("#ByBetweenDate").is(':checked') == false) {
+            alert("Please select By Exact Date or By Between Date !");
+            return false;
+        }
+        else if ($("#ByExactDate").is(':checked') == true && $("#Exactdate").val() == "") {
+            alert("Please enter Exact date !");
+            return false;
+        }
+        else if ($("#ByBetweenDate").is(':checked') == true && $("#Fromdate").val() == "") {
+            alert("Please enter From date!");
+            return false;
+        }
+        else if ($("#ByBetweenDate").is(':checked') == true && $("#Todate").val() == "") {
+            alert("Please enter To date!");
+            return false;
+        }
+        else {
+
+            return true;
+        }
+
+    }
+
+</script>
+@section Scripts {
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+    @Styles.Render("~/Content/themes/base/css")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Exactdate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Fromdate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Todate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+
+
+
+}

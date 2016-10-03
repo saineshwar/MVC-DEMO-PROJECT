@@ -1,0 +1,195 @@
+﻿@using GYMONE.Models
+@model RenewalDATA
+
+
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+
+<link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+<script>
+
+    $(document).ready(function () {
+        $("#DrpRenewal").change(function () {
+
+            if ($("#DrpRenewal").val() == "0") {
+
+                document.getElementById("MainPanel").style.display = "none";
+                document.getElementById("Ndate").style.display = "none";
+                document.getElementById("ODate").style.display = "none";
+                document.getElementById("ODate").value = "";
+                document.getElementById("Ubtn").style.display = "none";
+                alert("Select Renewal Type");
+
+
+            }
+            else if ($("#DrpRenewal").val() == "1") {
+                document.getElementById("MainPanel").style.display = "block";
+                document.getElementById("Ndate").style.display = "none";
+                document.getElementById("ODate").style.display = "block";
+                document.getElementById("Ubtn").style.display = "block";
+                $("#ContinuesDate").val($("#RenwalDate").val());
+            }
+
+
+            else if ($("#DrpRenewal").val() == "2") {
+                document.getElementById("MainPanel").style.display = "block";
+                document.getElementById("ODate").style.display = "none";
+                document.getElementById("Ndate").style.display = "block";
+                document.getElementById("Ubtn").style.display = "block";
+            }
+
+            else {
+
+                document.getElementById("MainPanel").style.display = "block";
+                document.getElementById("Ubtn").style.display = "none";
+            }
+
+        });
+
+    });
+
+
+
+
+</script>
+
+
+
+
+<div style="margin-top: 5px"></div>
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-3">
+        @Html.Label("Renewal Type")
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownListFor(m => m.DrpRenewal, new SelectList(Model.ListRenewaltype, "Value", "Text"), new { @class = "form-control" })
+        @Html.HiddenFor(m => m.PaymentID)
+        @Html.HiddenFor(m => m.MemberID)
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+<div style="margin-top: 5px"></div>
+
+
+<div style="display: none;" id="MainPanel">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Workouttype")
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.WorkouttypeID, new SelectList(Model.ListScheme, "SchemeID", "SchemeName"),
+                   new { @class = "form-control", id = "WorkouttypeID" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Workouttype")
+
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownList("PlantypeID", new SelectList(string.Empty, "PlanID", "PlanName"), "Select", new { @class = "form-control", id = "PlantypeID" })
+            @Html.ValidationMessageFor(model => model.PlantypeID)
+        </div>
+    </div>
+    <div style="margin-top: 5px"></div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Name")
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @readonly = true })
+        </div>
+        <div class="col-md-3">
+            @Html.Label(" Member no")
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.MemberNo, new { @class = "form-control", id = "MemberNo", @readonly = true })
+        </div>
+    </div>
+    <div style="margin-top: 5px"></div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Date")
+        </div>
+        <div class="col-md-3">
+            <div id="Ndate" style="display: none;">
+                @Html.TextBoxFor(model => model.NewDate, "{0:yyyy-MM-dd}", new { @readonly = true })
+            </div>
+            <div id="ODate" style="display: none;">
+                @Html.TextBoxFor(model => model.ContinuesDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+            </div>
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Renwal Date")
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.RenwalDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+        </div>
+    </div>
+    <div style="margin-top: 5px"></div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Amount")
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.PaymentAmount, new { @class = "form-control", @readonly = true })
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <div id="Ubtn" style="display: none;">
+        <div class="row">
+            <div class="col-md-12">
+                <input id="Update" class="btn btn-success" onclick="return CompareDate();" type="submit" name="actionType" value="Update" />
+           
+                <input id="btnCancel" class="btn btn-success"  name="actionType" type="submit" value="Cancel" />
+            </div>
+        </div>
+    </div>
+
+
+    <div style="margin-top: 5px"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () { rebindPlan() });
+</script>
+
+<script type="text/javascript">
+
+    function rebindPlan() {
+
+        if ('@ViewData["SelectedPlan"]' != null) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPlan")',
+                dataType: 'json',
+                data: {
+                    WorkTypeID: $("#WorkouttypeID").val()
+                },
+                success: function (plandata) {
+
+                    $.each(plandata, function (i, plan) {
+                        $("#PlantypeID").append('<option value="' + plan.PlanID + '">' + plan.PlanName + '</option>');
+
+                        if ('@ViewData["SelectedPlan"]' != 0) {
+                            $("#PlantypeID").val('@ViewData["SelectedPlan"]');
+                        }
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve plan.' + ex);
+                }
+            });
+        }
+
+
+    }
+</script>
